@@ -1,6 +1,6 @@
 .pdf
 .pptx
-localonly/
+localonly/*
 .doc
 .pdf
 .mov
