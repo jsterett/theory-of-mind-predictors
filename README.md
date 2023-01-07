@@ -4,7 +4,6 @@
 - This study includes behavioral measures, surveys, and government data.
 - The dataset includes data based on Scaling Theory of Mind (Wellman & Liu, 2004), parent surveys based on the Child's Social Understanding Scale, the child's age, their zip code's crime and language statistics, and the number of people the child interacts with regularly.
 
-
 *Dataset*
 - Dependent variable: Theory of Mind Performance
 - Independent variable: age (months), Zip Code crime rate and language diversity (decimal), social network size (#), school enrollment (1=yes, 0=no)
