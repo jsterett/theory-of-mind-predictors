@@ -8,3 +8,11 @@
 - Dependent variable: Theory of Mind Performance
 - Independent variable: age (months), Zip Code crime rate and language diversity (decimal), social network size (#), school enrollment (1=yes, 0=no)
 The only primary input file is a .csv where data from several excel sheets have been combined
+
+*Mock Up Preliminary Analysis*
+- Figure 1: histogram displaying the counts of each subject by age (in the actual spreadsheet age is in months) using Column Age and Column Participant
+- Figure 2: histogram displaying the counts of each subject by size of social network using Column Participant and Column SNS
+- Figure 3: linear regression of Column CSUS_Average by Column ToM_Average
+- Figure 4: linear regression of Column Age by Column ToM_Average
+- Figure 5: linear regression of Column ToM_Average by Column SNS
+I can remove data about zip code for these specific analyses 
