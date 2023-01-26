@@ -16,3 +16,7 @@ The only primary input file is a .csv where data from several excel sheets have 
 - Figure 4: linear regression of Column Age by Column ToM_Average
 - Figure 5: linear regression of Column ToM_Average by Column SNS
 I can remove data about zip code for these specific analyses 
+
+*Desired Plots*
+1. Correlation plot between ToM_Avg and CSUS_Avg: need to assign objects to variables, add in the aesthetic info, add the line of best fit, change the dot colors, label the axes with full titles (Scaling Theory of Mind Score Average vs. Child Social Understanding Scale Score Average)
+2. Correlation plot between ToM_Avg and SNS: need to assign objects to variables, add in the aesthetic info, add the line of best fit, change the dot colors, label the axes with full titles (Scaling Theory of Mind Score Average vs. Social Network Size)
