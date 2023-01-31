@@ -12,3 +12,4 @@ Color <- mmdata.long$Color
 ggplot(mmdata.long, aes(x=`Color`, y=`Number`, fill = `Color`)) + geom_boxplot()
 # creating second box plot and adding dot points
 ggplot(mmdata.long, aes(x=`Color`, y=`Number`, fill = `Color`)) + geom_boxplot() + geom_jitter()
+
