@@ -1,0 +1,163 @@
+---
+title             : "Neighborhood and Social Network Predictors of Preschoolers' Theory of Mind Development"
+shorttitle        : "Theory of Mind Influences"
+
+author: 
+  - name          : "Jordi Sterett"
+    affiliation   : "1"
+    corresponding : yes    # Define only one corresponding author
+    address       : ""
+    email         : "jordansterett@uchicago.edu"
+    role:         # Contributorship roles (e.g., CRediT, https://casrai.org/credit/)
+      - "Conceptualization"
+      - "Writing - Original Draft Preparation"
+      - "Writing - Review & Editing"
+
+affiliation:
+  - id            : "1"
+    institution   : "The University of Chicago"
+
+abstract: |
+  Research has indicated that children develop the ability to understand and apply others’ mental states, emotions, and knowledge through a skill known as Theory of Mind. However, little is known about how this skill initially arises. This study investigated how a child’s home and neighborhood environment may influence development of Theory of Mind. Such factors include parental perceptions of their children’s social understandings, the makeup of children’s neighborhood, and the size and makeup of their social network. This research can provide a better understanding of how children acquire Theory of Mind abilities and what kind of environments either promote or hinder this development. Counter to our hypothesis, neighborhood violent crime rate was positively and significantly correlated with children’s performance on the parent-report measure, indicating that children in areas that experience more violent crime may actually have better developed Theory of Mind. As hypothesized, age and children’s exposure to languages besides English were also significantly correlated with Theory of Mind. As predicted, Network Linguistic Entropy was correlated with Theory of Mind with marginal significance. However, it is also possible that factors within the home or characteristics of the child themselves may be the deciding factors in when Theory of Mind arises.
+  
+  <!-- https://tinyurl.com/ybremelq -->
+  
+keywords          : "Theory of Mind, Social Network, Neighborhood"
+wordcount         : "X"
+
+bibliography      : "r-references.bib"
+
+floatsintext      : yes
+linenumbers       : yes
+draft             : no
+mask              : no
+
+figurelist        : no
+tablelist         : no
+footnotelist      : no
+
+classoption       : "man"
+output            : papaja::apa6_word
+---
+
+```{r setup, include = FALSE}
+library("papaja")
+r_refs("r-references.bib")
+library(tidyverse)
+library(ggplot2)
+library(kableExtra)
+```
+
+```{r analysis-preferences}
+# Seed for random number generation
+set.seed(42)
+knitr::opts_chunk$set(cache.extra = knitr::rand_seed)
+```
+
+```{r read-in data}
+setwd('/Users/jordansterett/Desktop/D2M')
+# Reading in thesis data
+thesisdata <- read_csv("SterettD2M data.csv")
+```
+
+```{r assignment objects}
+TOM_Sum <- thesisdata$TOM_Sum
+CSUS_Average <- thesisdata$CSUS_Average
+Age <- thesisdata$Age
+```
+
+(ref:fig-CSUSTOM-caption) Table of Participant Age in Months
+
+```{r table-age}
+kable(thesisdata$Age,
+      "html",
+      digits = getOption("digits"),
+      row.names = NA,
+      col.names = "Participant Ages")
+```
+
+(ref:fig-CSUSTOM-caption) Histogram of Participant Social Network Size
+
+```{r SNS-histogram}
+SNS <- thesisdata$SNS
+# creating a histogram of social network sizes
+hist(SNS, col = "skyblue1", main = "Social Network Size", xlab = "Number of Alters", ylab = "Number of Participants", ylim=c(0, 25))
+```
+
+(ref:fig-CSUSTOM-caption) Histogram of Participant Age in Months
+
+```{r age-hist}
+ggplot(thesisdata, aes(thesisdata$Age)) + geom_histogram(fill="lightblue", color="black", binwidth=2) + 
+  labs(title="Participant Ages", x="Age (Months)", y="Frequency") + 
+  theme_apa()
+```
+
+(ref:fig-CSUSTOM-caption) Participant Race/Ethnicity Bar Graph
+
+```{r fig-race-ethnicity-bar}
+# assigning object to race/ethncity data
+Race_Ethnicity <- thesisdata$Race_Ethnicity
+# bar graph for racial/ethnicity demographics
+ggplot(thesisdata, aes(Race_Ethnicity)) + geom_bar(fill = "darkseagreen3") + theme(axis.text.x = element_text(angle=45, hjust=1)) + xlab("Race or Ethnicity") + 
+  ylab("Number of Participants")                 +
+  ggtitle("Participant Race or Ethnicity") 
+```
+
+(ref:fig-CSUSTOM-caption) Histogram of Parent 1 Education Level
+
+```{r fig-parent1edu-bar}
+# parent 1 education bar graph
+ggplot(thesisdata, aes(thesisdata$Parent1_Education)) + geom_bar()
+```
+
+(ref:fig-CSUSTOM-caption) Histogram of Participant Birth Order
+
+```{r birth-order-hist}
+ggplot(thesisdata, aes(thesisdata$Birth_Order)) + 
+  geom_bar(fill="skyblue1", color = "black") +
+  labs(x="Birth Order", y="Frequency") + theme_apa()
+```
+
+(ref:fig-CSUSTOM-caption) Correlation between Behavioral Measure and Parent-Report Theory of Mind 
+
+```{r fig:CSUS-TOM-cor, fig.cap = "(ref:fig-CSUSTOM-caption)"}
+# correlation plot between tom and csus 
+plot(y=`CSUS_Average`, x=`TOM_Sum`, main = "Behavioral Measure vs. Parent-Report Theory of Mind",
+     ylab = "Parent-Report", xlab = "Behavioral Measure",
+     pch = 19, frame = FALSE) +
+abline(lm(`CSUS_Average` ~ `TOM_Sum`, data = thesisdata), col = "blue") + theme_apa()
+```
+
+(ref:fig-CSUSTOM-caption) Map of Participant States of Residence
+
+```{r map}
+# including external image of map of participant states of residence
+knitr::include_graphics("state map.png")
+```
+
+# Methods
+To address this question, I collected data on 64 participants recruited through the Infant Learning and Development Laboratory. Due to the ongoing COVID-19 pandemic, no in-person testing occurred. Instead, all behavioral tasks were conducted over Zoom. The parent-report measures were administered through Qualtrics, an online platform for anonymous surveys.
+
+## Participants
+Participant ages ranged from 54.0 months to 70.9 months with a mean age of 58.25 months or 4 years, 10 months (Figure\ \@ref(fig:age-hist).[^1] Thirty-four females and 30 males participated in the study, of which 56 were enrolled in school or daycare at the time of the behavioral task. 38 participants were European, six were Hispanic/Latino, six were Asian, four were Black or African American, nine reported more than one race or ethnicity, and one participant selected “Other.” Out of the 64 participants, 34 had at least one parent who had completed Post-Graduate education (Figure\ \@ref(fig:fig-parent1edu-bar). All participants were native English speakers. The majority of participants reside in the Greater Chicago area although the study was conducted virtually and included participants throughout the United States Figure\ \@ref(fig:map).
+
+[^1]: Participants were recruited using the University of Chicago's online participant database.
+
+## Material
+
+## Procedure
+
+## Data analysis
+We used `r cite_r("r-references.bib")` for all our analyses. 
+
+# Results
+
+# Discussion
+
+
+\newpage
+
+# References
+
+::: {#refs custom-style="Bibliography"}
+:::
