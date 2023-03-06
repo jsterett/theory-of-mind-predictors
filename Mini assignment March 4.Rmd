@@ -1,0 +1,151 @@
+---
+title             : "Neighborhood and Social Network Predictors of Preschoolers' Theory of Mind Development"
+shorttitle        : "Theory of Mind Predictors"
+
+author: 
+  - name          : "Jordi Sterett"
+    affiliation   : "1"
+    corresponding : yes    # Define only one corresponding author
+    address       : ""
+    email         : "jordansterett@uchicago.edu"
+    role:         # Contributorship roles (e.g., CRediT, https://casrai.org/credit/)
+      - "Conceptualization"
+      - "Writing - Original Draft Preparation"
+      - "Writing - Review & Editing"
+
+affiliation:
+  - id            : "1"
+    institution   : "The University of Chicago"
+
+abstract: |
+  Research has indicated that children develop the ability to understand and apply others’ mental states, emotions, and knowledge through a skill known as Theory of Mind. However, little is known about how this skill initially arises. This study investigated how a child’s home and neighborhood environment may influence development of Theory of Mind. Such factors include parental perceptions of their children’s social understandings, the makeup of children’s neighborhood, and the size and makeup of their social network. This research can provide a better understanding of how children acquire Theory of Mind abilities and what kind of environments either promote or hinder this development. Counter to our hypothesis, neighborhood violent crime rate was positively and significantly correlated with children’s performance on the parent-report measure, indicating that children in areas that experience more violent crime may actually have better developed Theory of Mind. As hypothesized, age and children’s exposure to languages besides English were also significantly correlated with Theory of Mind. As predicted, Network Linguistic Entropy was correlated with Theory of Mind with marginal significance. However, it is also possible that factors within the home or characteristics of the child themselves may be the deciding factors in when Theory of Mind arises.
+  
+  <!-- https://tinyurl.com/ybremelq -->
+  
+keywords          : "Theory of Mind, Social Network, Neighborhood"
+wordcount         : "X"
+
+bibliography      : "Mini Feb 23.bib"
+
+floatsintext      : yes
+linenumbers       : yes
+draft             : no
+mask              : no
+
+figurelist        : no
+tablelist         : no
+footnotelist      : no
+
+classoption       : "man"
+output            : papaja::apa6_pdf
+---
+
+```{r setup, include = FALSE}
+library("papaja")
+r_refs("Mini Feb 23.bib")
+library(tidyverse)
+library(ggplot2)
+library(kableExtra)
+```
+
+```{r read-in data}
+setwd('/Users/jordansterett/Desktop/D2M')
+# Reading in thesis data
+thesisdata <- read_csv("SterettD2M data.csv")
+```
+
+```{r assignment objects}
+TOM_Sum <- thesisdata$TOM_Sum
+CSUS_Average <- thesisdata$CSUS_Average
+Age <- thesisdata$Age
+CSUS_mean <- mean(CSUS_Average)
+CSUS_sd <- sd(CSUS_Average)
+```
+
+# Methods
+To address this question, I collected data on `r nrow(thesisdata)` participants recruited through the Infant Learning and Development Laboratory. Due to the ongoing COVID-19 pandemic, no in-person testing occurred. Instead, all behavioral tasks were conducted over Zoom. The parent-report measures were administered through Qualtrics, an online platform for anonymous surveys.
+
+## Participants
+Participant ages ranged from 54.0 months to 70.9 months with a mean age of `r mean(Age)` months or 4 years, 10 months (see Figure\ \@ref(fig:age-hist)). Thirty-four females and 30 males participated in the study, of which 56 were enrolled in school or daycare at the time of the behavioral task. 38 participants were European, six were Hispanic/Latino, six were Asian, four were Black or African American, nine reported more than one race or ethnicity, and one participant selected “Other” (see Figure\ \@ref(fig:race-ethnicity-bar)). Out of the 64 participants, 34 had at least one parent who had completed Post-Graduate education (see Figure\ \@ref(fig:parent1edu-bar)). All participants were native English speakers. The majority of participants reside in the Greater Chicago area although the study was conducted virtually and included participants throughout the United States Figure\ \@ref(fig:map). Birth order data were also collected (see Figure\ \@ref(fig:birth-order-hist)).
+
+```{r age-hist, fig.align = 'center', out.width = "100%", fig.cap = "Histogram of Participant Age in Months"}
+ggplot(thesisdata, aes(thesisdata$Age)) + geom_histogram(fill="lightblue", color="black", binwidth=2) + 
+  labs(title="Participant Ages", x="Age (Months)", y="Frequency") + 
+  theme_apa()
+```
+
+```{r race-ethnicity-bar, fig.align = 'center', out.width = "100%", fig.cap = "Participant Race/Ethnicity Bar Graph"}
+# assigning object to race/ethncity data
+Race_Ethnicity <- thesisdata$Race_Ethnicity
+# bar graph for racial/ethnicity demographics
+ggplot(thesisdata, aes(Race_Ethnicity)) + geom_bar(fill = "darkseagreen3", color = "black") + theme_apa() + theme(axis.text.x = element_text(angle=45, hjust=1)) + xlab("Race or Ethnicity") + 
+  ylab("Number of Participants") +
+  ggtitle("Participant Race or Ethnicity")
+```
+
+```{r parent1edu-bar, fig.align = 'center', out.width = "100%", fig.cap = "Histogram of Parent 1 Education Level"}
+# parent 1 education bar graph
+ggplot(thesisdata, aes(thesisdata$Parent1_Education)) + geom_bar(fill="lightpink", color="black") + labs(title = "Parent 1 Education", y = "Frequency", x = "Parent 1 Education") + theme_apa()
+```
+
+```{r map, fig.align = 'center', out.width = "100%", fig.cap = "Map of Participant States of Residence"}
+# including external image of map of participant states of residence
+knitr::include_graphics("state map.png")
+```
+
+```{r birth-order-hist, fig.align = 'center', out.width = "100%", fig.cap = "Histogram of Participant Birth Order"}
+ggplot(thesisdata, aes(thesisdata$Birth_Order)) + 
+  geom_bar(fill="skyblue1", color = "black") +
+  labs(x="Birth Order", y="Frequency") + theme_apa()
+```
+
+## Procedure
+The behavioral tasks were conducted over Zoom using @wellmanliu. In this study, participants are asked to perform a Diverse Desires task, Diverse Beliefs task, Knowledge Access task, Contents False Belief task, and a Real-Apparent Emotions task over Zoom with a researcher using a slideshow presentation. For an overview of this presentation, see Figure\ \@ref(fig:slides). These questions ask children to infer what others want, know, and feel and how they will act in accordance. For example, the Knowledge Access task asks children to infer if the character knows what is inside the box when only the child, but not the character, has seen the puppy toy inside. A child received a score of 1 if they infer that the character did not know what was inside the box and a score of 0 if they inferred he did know. 
+
+```{r slides, fig.align = 'center', out.width = "100%", fig.cap = "Slides shown to participants over Zoom for each task within the behavioral measure"}
+# including external image of slides for behavioral measure
+knitr::include_graphics("TOM slides.png")
+```
+
+The parent-report measures were administered through Qualtrics. In the consent form, parents were asked to provide information regarding their child’s sex, race and ethnicity, birth order, native language, additional languages, and school enrollment. Parents also provided their own race and ethnicity, spoken languages, education level, and occupation. In order to measure parental perceptions of their children’s Theory of Mind skills, they filled out The Children’s Social Understanding Scale which asks about their children’s understanding of beliefs, knowledge, perception, desires, intentions, and emotions [@tahiroglu].
+Additionally, information on children’s social networks was acquired through The Child Social Network Questionnaire developed by @burkebrezackwoodward. This Questionnaire asks about who children see on a regular basis. Parents then provided demographic information on each of these “alters” [@burkebrezackwoodward; @robins]. We determined both the size (measured as the number of alters) and the diversity (the “measure of homophily the child shares with the network”) of each child’s social network using R, a program for statistical coding [@burkebrezackwoodward, p. 19; @R-base].
+Neighborhood measures come from children’s zip codes as reported by their caregivers. Information on each zip code’s racial and ethnic makeup is extrapolated from @zipdatamaps, a website that provides demographics and statistics for United States zip codes. Violent crime rate information comes from @crimegrade  and includes the rate of violent crimes per capita in each zip code. Linguistic diversity data are sourced from the @langmap (2015). Linguistic diversity is calculated as the proportion of residents who speak a language other than English compared to the total number of residents. 
+
+## Data analysis
+We used `r cite_r("r-references.bib")` and JASP Team (2023). JASP (Version 0.17.1) for all our analyses. 
+
+# Results
+## *Theory of Mind Measures*
+Children’s performance on @wellmanliu followed a bell curve with a mean score of 5.30 (SD = 1.58, range = 1.00-8.00) as shown in Figure\ \@ref(fig:TOM-hist). All scores fell within three standard deviations of the mean. 
+
+```{r TOM-hist, fig.align = 'center', out.width = "100%", fig.cap = "Scaling Theory of Mind tasks Sum Histogram"}
+hist(`TOM_Sum`, col = "skyblue1", main = "Behavioral Theory of Mind", xlab = "Scaling Theory of Mind tasks Sum")
+```
+
+Parents reported a mean score of 3.28 (SD = 0.35, range = 1.00-4.00) for their children, a score appropriate for their age, as reported in @tahiroglu. The data followed a normal distribution and all observations were within three standard deviations of the mean as shown in Figure\ \@ref(fig:CSUS-hist). One participant did not complete this survey for a total of 64 participants, as reported above. 
+
+```{r CSUS-hist, fig.align = 'center', out.width = "100%", fig.cap = "The Children's Soocial Understanding Scale Average Score Histogram"}
+hist(`CSUS_Average`, col = "skyblue1", main = "Parent-Report Theory of Mind", xlab = "The Children's Social Understanding Scale Average Score")
+```
+
+```{r CSUS-TOM-cor, fig.align = 'center', out.width = "100%", fig.cap = "Correlation between Behavioral Measure and Parent-Report Theory of Mind"}
+# correlation plot between tom and csus 
+plot(y=`CSUS_Average`, x=`TOM_Sum`, main = "Behavioral Measure vs. Parent-Report Theory of Mind",
+     ylab = "Parent-Report", xlab = "Behavioral Measure",
+     pch = 19, frame = FALSE) +
+abline(lm(`CSUS_Average` ~ `TOM_Sum`, data = thesisdata), col = "blue") + theme_apa()
+```
+
+```{r table}
+tomtable <-thesisdata %>% select(26, 35)
+tomtable %>%
+  kbl() %>%
+  kable_classic_2(full_width = F)
+```
+
+# Discussion
+
+# References
+
+::: {#refs custom-style="Bibliography"}
+:::
