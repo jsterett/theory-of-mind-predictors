@@ -1,0 +1,243 @@
+---
+title             : "Neighborhood and Social Network Predictors of Preschoolers' Theory of Mind Development"
+shorttitle        : "Theory of Mind Predictors"
+
+author: 
+  - name          : "Jordi Sterett"
+    affiliation   : "1"
+    corresponding : yes    # Define only one corresponding author
+    address       : "Chicago, IL 60637"
+    email         : "jordansterett@uchicago.edu"
+    role:         # Contributorship roles (e.g., CRediT, https://casrai.org/credit/)
+      - "Conceptualization"
+      - "Writing - Original Draft Preparation"
+      - "Writing - Review & Editing"
+
+affiliation:
+  - id            : "1"
+    institution   : "The University of Chicago"
+
+abstract: |
+  Research has indicated that children develop the ability to understand and apply others’ mental states, emotions, and knowledge through a skill known as Theory of Mind. However, little is known about how this skill initially arises. This study investigated how a child’s home and neighborhood environment may influence development of Theory of Mind. Such factors include parental perceptions of their children’s social understandings, the makeup of children’s neighborhood, and the size and makeup of their social network. This research can provide a better understanding of how children acquire Theory of Mind abilities and what kind of environments either promote or hinder this development. Counter to our hypothesis, neighborhood violent crime rate was positively and significantly correlated with children’s performance on the parent-report measure, indicating that children in areas that experience more violent crime may actually have better developed Theory of Mind. As hypothesized, age and children’s exposure to languages besides English were also significantly correlated with Theory of Mind. As predicted, Network Linguistic Entropy was correlated with Theory of Mind with marginal significance. However, it is also possible that factors within the home or characteristics of the child themselves may be the deciding factors in when Theory of Mind arises.
+  
+  <!-- https://tinyurl.com/ybremelq -->
+  
+keywords          : "Theory of Mind, Social Network, Neighborhood"
+wordcount         : "X"
+
+bibliography      : "Mini Feb 23.bib"
+
+floatsintext      : yes
+linenumbers       : yes
+draft             : no
+mask              : no
+
+figurelist        : no
+tablelist         : no
+footnotelist      : no
+
+classoption       : "man"
+output            : papaja::apa6_pdf
+
+---
+
+```{r setup, include = FALSE, echo=FALSE, results='hide'}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+library(ggplot2)
+library(kableExtra)
+library(tidyverse)
+library("papaja")
+r_refs("Mini Feb 23.bib")
+library(magick)
+require(magick)
+```
+
+```{r read-in data}
+setwd('/Users/jordansterett/Desktop/D2M')
+# Reading in thesis data
+thesisdata <- read_csv("SterettD2M data.csv")
+```
+
+```{r assignment objects}
+TOM_Sum <- thesisdata$TOM_Sum
+CSUS_Average <- thesisdata$CSUS_Average
+Age <- thesisdata$Age
+CSUS_mean <- mean(CSUS_Average)
+CSUS_sd <- sd(CSUS_Average)
+VCR<-thesisdata$VCR
+NLE <- thesisdata$NetworkLinguisticEntropy
+```
+
+# Introduction
+
+Theory of Mind development marks a crucial stage in which children gain the ability to see the world from another’s perspective. @pernerlang define Theory of Mind as “the ability to ascribe mental states, such as desires, beliefs, feelings and intentions to oneself and to other people.” This skill is understood to take shape between three and five years of age among typically-developing children [@pernerlang]. Relevant Theory of Mind skills include the ability to understand the knowledge—or lack thereof—of another person as well as their desires and emotions even when they differ from one’s own. For example, a child who has developed Theory of Mind knows that someone may favor a snack they would not pick for themselves. Wellman and Liu (2004) created a scaled set of tasks meant to measure different aspects of Theory of Mind. With this scale, they observed a highly predictable sequence of Theory of Mind task success and hope to better understand individual differences in the acquisition of Theory of Mind based on children’s early experiences and environments.
+
+Currently, researchers have identified several predictors of when children develop Theory of Mind. Perhaps the most established predictor of Theory of Mind development among children is age. At the age of three, the majority of children fail False Belief tasks whereas most four year olds pass [@pernerlang]. In a meta-analysis, @watson found a significant main effect of age on False Belief task performance where chances of being correct more than double with each year of age between 30 and 100 months of age. While not the only task used to evaluate children’s Theory of Mind ability, False Belief is a popular choice among researchers (Wellman & Liu, 2004). 
+
+Number of siblings and birth order are also well-addressed correlates of Theory of Mind performance. Several studies have found a positive correlation between the number of siblings and Theory of Mind [@cutting; @pernerruffmanleekam; @lewis]. @mcalister found having any child-aged sibling was correlated with children’s overall Theory of Mind. This was more pronounced among youngest children, suggesting that birth order is also correlated with Theory of Mind [@mcalister; @lewis]. Other previously addressed correlates of Theory of Mind include parental education, income, and bilingualism. All three of these variables have been found to be positively correlated with Theory of Mind [@cutting; @yukovelmanwellman]. 
+
+Several studies have also explored the connection between other social factors and Theory of Mind performance. @lewis also found that the number of kin who lived in close proximity to the child also had a significant influence on Theory of Mind performance according to a logistic regression. @suway determined that negative peer interactions predicted lowered Theory of Mind task performance. These findings open the door to exploration of children’s social networks rather than just their siblings in understanding Theory of Mind development. 
+
+In order to expand our understanding of predictors of Theory of Mind, it is helpful to consider better understood aspects of development, such as executive functioning, and their relationship to Theory of Mind. Around four years of age, children are developing both their understanding of Theory of Mind—particularly false beliefs—and their executive functioning [@pernerlang]. @sabbagh found that these two skills were positively correlated with one another during this time period. With age partialled out, @frye found improvement on Theory of Mind tasks was correlated with performance on a rule-based sorting task involving the executive functioning skill of self-control. In a meta-analysis of studies assessing Theory of Mind and executive functioning, @pernerlang found a complementary relationship between these two abilities, also with age partialled out. They suggest that perhaps success at Theory of Mind tasks requires executive functioning skills. Because of this established link between executive functioning and Theory of Mind, we have reason to believe that environmental factors that have a relationship with executive functioning development have a similar relationship with Theory of Mind development.
+
+Research has also identified lower executive functioning among children exposed to familial trauma and violence in which they are not the immediate victim [@deprince]. However, there is also evidence that trauma-exposure outside of the household is connected to lower executive functioning where trauma-exposure can include events such as “a traffic accident, witnessing domestic violence or a shooting” [@opdenkelder]. Among adults, as perceived neighborhood stress increased—such as knowledge of violent crime occurrences, diminished feelings of safety, and distrust of neighbors—executive functioning scores decreased [@munoz]. Poverty has also been well-studied in its relationship to social-cognitive development. Children exposed to poverty perform worse on executive functioning tasks relative to the amount of time they live in poverty [@raver; @finegood]. These findings open a line of questioning into whether a similar relationship between perceived neighborhood stress and poverty and executive functioning exists among children who may have a different awareness of safety and financial concerns within their neighborhood. While the relationship between direct maltreatment, violence, and violence with Theory of Mind and executive functioning is well understood, less research has been devoted to understanding whether more distant exposure to violence, such as in one’s neighborhood, also is correlated with lower performance on these types of tasks. 
+
+Although little research has explored the relationship between diverse linguistic exposure and Theory of Mind directly, several studies address the connection between exposure to non-native languages and better communicative ability in early childhood, either in perspective taking or imitation [@fan; @liberman; @howard]. These findings, in conjunction with findings demonstrating that bilingualism is correlated with higher Theory of Mind ability, suggest a possible link between diverse linguistic experiences and Theory of Mind, even when children do not adopt these second languages themselves. Hence, we are interested in exploring if being exposed to people who speak languages other than children’s native language whether in their neighborhood or social network is correlated with enhanced Theory of Mind. 
+
+The present study seeks to bridge the gap between the existing research on predictors of Theory of Mind and predictors of other social-cognitive skills—especially executive functioning—in hopes of identifying additional factors within one’s early childhood social network and neighborhood environments that are correlated with Theory of Mind performance. Specifically, it explores the relations, if one exists, between children’s zip code, their social network, and their Theory of Mind development. In this study, I aim to investigate two sets of questions:
+
+*Set 1:* How do the demographics of a child’s zip code relate to their Theory of Mind development? To be precise, how are neighborhood linguistic diversity, population density, median household income, and violent crime rate related to children’s performance on Theory of Mind tasks? I predict that children with more Network Linguistic Entropy will perform better on the Theory of Mind tasks based on previous literature identifying social and cognitive advantages to additional language exposure [@fan; @liberman; @howard]. Additionally, I predict increased neighborhood crime rate will predict lower Theory of Mind performance while increased median household income will predict higher Theory of Mind performance based on research identifying a negative correlation between violence and poverty exposure with other aspects of children’s social and cognitive development [@burack; @cicchetti; @oreilly; @raver]. 
+
+*Set 2:* How do the demographics of a child’s social network relate to their Theory of Mind development? Specifically, how are social network size and linguistic diversity related to children’s performance on Theory of Mind tasks? I predict that increased social network linguistic diversity will predict higher Theory of Mind performance. This question and complementary hypothesis are likewise inspired by research demonstrating the relationship between diverse linguistic exposure, perspective taking, and social learning [@fan; @liberman; @howard]. While this research demonstrates how a child’s neighborhood can potentially improve Theory of Mind, this study investigates whether an effect exists when members of a child’s household or social network at large speak multiple languages. 
+
+Overall, the goal of this study is to identify relations between children’s external environments, as defined as their neighborhood and social network, and their Theory of Mind development during the preschool years. This is motivated by a desire to better understand individual variation in Theory of Mind development in hopes of supporting children’s social understanding and development.
+
+# Methods
+To address this question, I collected data on `r nrow(thesisdata)` participants recruited through the Infant Learning and Development Laboratory. Due to the ongoing COVID-19 pandemic, no in-person testing occurred. Instead, all behavioral tasks were conducted over Zoom. The parent-report measures were administered through Qualtrics, an online platform for anonymous surveys.
+
+## Participants
+
+```{r age-hist, include=TRUE, echo=FALSE, results='hide', fig.align = 'center', out.width = "80%", fig.cap = "Histogram of Participant Age in Months"}
+ggplot(thesisdata, aes(thesisdata$Age)) + geom_histogram(fill="lightblue", color="black", binwidth=2) + 
+  labs(title="Participant Ages", x="Age (Months)", y="Frequency") + 
+  theme_apa()
+```
+
+```{r race-ethnicity-bar, include=TRUE, echo=FALSE, results='hide', fig.align = 'center', out.width = "80%", fig.cap = "Participant Race/Ethnicity Bar Graph"}
+# assigning object to race/ethncity data
+Race_Ethnicity <- thesisdata$Race_Ethnicity
+# bar graph for racial/ethnicity demographics
+ggplot(thesisdata, aes(Race_Ethnicity)) + geom_bar(fill = "lightblue", color = "black") + theme_apa() + theme(axis.text.x = element_text(angle=45, hjust=1)) + xlab("Race or Ethnicity") + 
+  ylab("Number of Participants") +
+  ggtitle("Participant Race or Ethnicity")
+```
+
+```{r parent1edu-bar, include=TRUE, echo=FALSE, results='hide', fig.align = 'center', out.width = "80%", fig.cap = "Histogram of Parent 1 Education Level"}
+# parent 1 education bar graph
+ggplot(thesisdata, aes(thesisdata$Parent1_Education)) + geom_bar(fill="lightblue", color="black") + labs(title = "Parent 1 Education", y = "Frequency", x = "Parent 1 Education") + theme_apa()
+```
+
+```{r map, fig.align = 'center', out.width = "80%", fig.cap = "Map of Participant States of Residence"}
+# including external image of map of participant states of residence
+knitr::include_graphics("state map.png")
+```
+
+```{r birth-order-bar, include=TRUE, echo=FALSE, results='hide', fig.align = 'center', out.width = "80%", fig.cap = "Histogram of Participant Birth Order"}
+ggplot(thesisdata, aes(thesisdata$Birth_Order)) + 
+  geom_bar(fill="lightblue", color = "black") +
+  labs(x="Birth Order", y="Frequency") + theme_apa()
+```
+
+Participant ages ranged from 54.0 months to 70.9 months with a mean age of `r mean(Age)` months or 4 years, 10 months (see Figure\ \@ref(fig:age-hist)). Thirty-four females and 30 males participated in the study, of which 56 attended of school or daycare at the time of testing. 38 participants were European, six were Hispanic/Latino, six were Asian, four were Black or African American, nine reported more than one race or ethnicity, and one participant selected “Other” (see Figure\ \@ref(fig:race-ethnicity-bar)). Out of the 64 participants, 34 had at least one parent who had completed Post-Graduate education (see Figure\ \@ref(fig:parent1edu-bar)). All participants were native English speakers. The majority of participants reside in the Greater Chicago area although the study was conducted virtually and included participants throughout the United States Figure\ \@ref(fig:map). Birth order data were also collected (see Figure\ \@ref(fig:birth-order-bar)).
+
+## Procedure
+
+```{r slides, fig.align = 'center', out.width = "80%", fig.cap = "Slides shown to participants over Zoom for each task within the behavioral measure"}
+# including external image of slides for behavioral measure
+knitr::include_graphics("TOM slides.png")
+```
+
+The behavioral tasks were conducted over Zoom using Wellman and Liu (2004). In this study, participants are asked to perform a Diverse Desires task, Diverse Beliefs task, Knowledge Access task, Contents False Belief task, and a Real-Apparent Emotions task over Zoom with a researcher using a slideshow presentation. For an overview of this presentation, see Figure\ \@ref(fig:slides). These questions ask children to infer what others want, know, and feel and how they will act in accordance. For example, the Knowledge Access task asks children to infer if the character knows what is inside the box when only the child, but not the character, has seen the puppy toy inside. A child received a score of 1 if they infer that the character did not know what was inside the box and a score of 0 if they inferred he did know. 
+
+The parent-report measures were administered through Qualtrics. In the consent form, parents were asked to provide information regarding their child’s sex, race and ethnicity, birth order, native language, additional languages, and school enrollment. Parents also provided their own race and ethnicity, spoken languages, education level, and occupation. In order to measure parental perceptions of their children’s Theory of Mind skills, they filled out The Children’s Social Understanding Scale which asks about their children’s understanding of beliefs, knowledge, perception, desires, intentions, and emotions [@tahiroglu].
+
+Additionally, information on children’s social networks was acquired through The Child Social Network Questionnaire developed by @burkebrezackwoodward. This Questionnaire asks about who children see on a regular basis. Parents then provided demographic information on each of these “alters” [@burkebrezackwoodward; @robins]. We determined both the size (measured as the number of alters) and the diversity (the “measure of homophily the child shares with the network”) of each child’s social network using R, a program for statistical coding [@burkebrezackwoodward, p. 19; @R-base].
+
+Neighborhood measures come from children’s zip codes as reported by their caregivers. Information on each zip code’s median household income and population density is extrapolated from @zipdatamaps, a website that provides demographics and statistics for United States zip codes. Violent crime rate information comes from @crimegrade  and includes the rate of violent crimes per capita in each zip code. Linguistic diversity data are sourced from the @langmap (2015). Linguistic diversity is calculated as the proportion of residents who speak a language other than English compared to the total number of residents. 
+
+## Data analysis
+
+We used `r cite_r("r-references.bib")` and JASP Team (2023). JASP (Version 0.17.1) for all our analyses. 
+
+# Results
+
+## Behavioral Theory of Mind
+
+```{r TOM-hist, include=TRUE, echo=FALSE, results='hide', fig.align = 'center', out.width = "80%", fig.cap = "Scaling Theory of Mind tasks Sum Histogram"}
+hist(`TOM_Sum`, col = "lightblue", main = "Behavioral Theory of Mind", xlab = "Scaling Theory of Mind tasks Sum")
+```
+
+Children’s performance on @wellmanliu followed a bell curve with a mean score of 5.30 (SD = 1.58, range = 1.00-8.00) as shown in Figure\ \@ref(fig:TOM-hist). 
+
+## Parent-Report Theory of Mind
+
+```{r CSUS-hist, include=TRUE, echo=FALSE, results='hide', fig.align = 'center', out.width = "80%", fig.cap = "The Children's Soocial Understanding Scale Average Score Histogram"}
+hist(`CSUS_Average`, col = "lightblue", main = "Parent-Report Theory of Mind", xlab = "The Children's Social Understanding Scale Average Score")
+```
+
+Parents reported a mean score of 3.28 (SD = 0.35, range = 1.00-4.00) for their children, a score appropriate for their age, as reported in @tahiroglu. The data followed a normal distribution as shown in Figure\ \@ref(fig:CSUS-hist). One participant did not complete this survey for a total of 64 participants, as reported above.
+
+## Overall Theory of Mind
+
+```{r CSUS-TOM-cor, include=TRUE, echo=FALSE, results='hide', fig.align = 'center', out.width = "80%", fig.cap = "Correlation between Behavioral Measure and Parent-Report Theory of Mind"}
+# correlation plot between tom and csus 
+plot(y=`CSUS_Average`, x=`TOM_Sum`, main = "Behavioral Measure vs. Parent-Report Theory of Mind",
+     ylab = "Parent-Report", xlab = "Behavioral Measure",
+     pch = 19, frame = FALSE) +
+abline(lm(`CSUS_Average` ~ `TOM_Sum`, data = thesisdata)) + theme_apa()
+```
+
+```{r tomscoretab}
+colnames(thesisdata)[26] = "Parent Report"
+colnames(thesisdata)[35] = "Behavioral Measure"
+tomtable <-thesisdata %>% select(26, 35)
+knitr::kable(tomtable, caption = "Theory of Mind Scores by Participant")%>%
+  kable_classic_2(full_width = F)
+```
+
+In order to assess the accuracy of parent perceptions of their children’s Theory of Mind abilities, children’s average score on The Children’s Social Understanding Scale was run in a Pearson’s r with their Scaling Theory-of-Mind tasks sum. Figure\ \@ref(fig:CSUS-TOM-cor) shows the results of this analysis. These were correlated with a highly statistically significant p-value of .011 and a correlation coefficient of .32. Due to the highly significant correlation between measures and having several participants not complete each behavioral task, all following analyses will utilize the Children’s Social Understanding Scale average as the measure of children’s Theory of Mind ability. See Table\ \@ref(tab:tomscoretab) for participant scores on each measure.
+
+## Child Demographics and Theory of Mind
+
+```{r agetom, include=TRUE, echo=FALSE, results='hide', fig.align = 'center', out.width = "80%", fig.cap = "Correlation between Age and Theory of Mind"}
+plot(y=`CSUS_Average`, x=`Age`, main = "Age vs. Theory of Mind", ylab = "Theory of Mind (Average)",
+     xlab = "Age (Months)", pch = 19, frame = FALSE) + theme_apa()
+abline(lm(`CSUS_Average`~`Age`, data = thesisdata))
+```
+
+```{r otherlangtom, include=TRUE, echo=FALSE, results='hide', fig.align = 'center', out.width = "80%", fig.cap = "Correlation between Exposure to Other Languages and Theory of Mind"}
+Other_Lang <- thesisdata$Other_Languages
+plot(y=`CSUS_Average`, x=`Other_Lang`, main = "Other Languages vs. Theory of Mind", ylab = "Theory of Mind (Average)",
+     xlab = "Other Languages", pch = 19, frame = FALSE) + theme_apa()
+abline(lm(`CSUS_Average`~`Other_Languages`, data = thesisdata))
+```
+
+Age in months was significantly correlated with Theory of Mind performance with a correlation coefficient of .28—indicating a slight positive correlation (see Figure\ \@ref(fig:agetom)). The correlation between children’s utilization and exposure to languages in addition to English, coded as “Other Languages,” was also positively correlated with Theory of Mind performance. This was significant with a p-value of .002 and a correlation coefficient of .39 (see Figure\ \@ref(fig:otherlangtom)). Birth Order was trending toward a positive correlation with Theory of Mind performance with youngest siblings performing slightly higher. 
+
+## Neighborhood Factors and Theory of Mind
+
+```{r vcrtom, include=TRUE, echo=FALSE, results='hide', fig.align = 'center', out.width = "80%", fig.cap = "Correlation between Neighboorhood Violent Crime Rate and Theory of Mind"}
+plot(y=`CSUS_Average`, x=`VCR`, main = "Violent Crime Rate vs. Theory of Mind",
+     ylab = "Theory of Mind (Average)", xlab = "Neighborhood Violent Crime Rate",
+     pch = 19, frame = FALSE) + theme_apa()
+abline(lm(`CSUS_Average` ~ `VCR`, data = thesisdata))
+```
+
+One neighborhood measure was correlated with Theory of Mind with statistical significance. Violent Crime Rate had a modest positive correlation (r = .27) with participant’s Theory of Mind score with a statistically significant p-value of .038 (see Figure\ \@ref(fig:vcrtom).) This contradicts the hypothesis that crime rate would be negatively correlated with children’s development of Theory of Mind. In fact, it suggests that children in areas with higher rates of violent crime actually performed slightly better on the Theory of Mind measure. 
+
+## Social Network Factors and Theory of Mind
+
+```{r lingenttom, include=TRUE, echo=FALSE, results='hide', fig.align = 'center', out.width = "80%", fig.cap = "Correlation between Social Network Linguistic Entropy and Theory of Mind"}
+plot(y=`CSUS_Average`, x=`NLE`, main = "Network Linguistic Entropy vs. Theory of Mind", ylab = "Theory of Mind (Average)",
+     xlab = "Network Linguistic Entropy", pch = 19, frame = FALSE) + theme_apa()
+abline(lm(`CSUS_Average`~`NLE`))
+```
+
+Network Linguistic Entropy was correlated with participant’s mean score on Children’s Social Understanding Scale with a correlation coefficient of .24 and a marginally significant p-value of .076 (see Figure\ \@ref(fig:lingenttom)). Social Network Size and Network Race Entropy were both slightly positively correlated with children’s performance on the Theory of Mind measure although neither correlation was statistically significant.
+
+# Discussion
+
+Exposure to other languages was marginally correlated with Theory of Mind performance. These findings are congruent with existing literature on the positive correlation between bilingualism and Theory of Mind but also suggests that exposure to other languages under the threshold of bilingualism is correlated with Theory of Mind [@yukovelmanwellman].
+
+The positive correlation between Violent Crime Rate and Theory of Mind performance counters research demonstrating a relationship between violent crime and diminished social cognitive development [@munoz; @burack; @cicchetti; @oreilly]. A potential explanation for this is that perhaps caregivers in areas with prevalent violent crime consequently discuss the issue of violent crime more often with their children. These conversations may include discussion of why people break laws and commit violent acts contrary to what children themselves are taught to do. Such conversations may result in children grappling with the knowledge that not everyone knows what they know and act in different ways then them, perhaps due to difficult circumstances children may be taught to empathize with.
+
+Limitations to this study largely fall under the category of sampling. As discussed in the methods portion, the children in this study had parents with high levels of educational attainment as compared to the average U.S. child. Similarly, most children within the sample live in the surrounding Chicago area as a result of previous in-person testing. Therefore, a large portion of the children reside in urban communities that may vary from rural and suburban communities in key aspects such as population density, violent crime rate, and median household income.
+
+Future research can further tease apart questions raised by these findings. For example, the majority of participants only heard English or English and one other language. Therefore, participants' “Other Languages” variables were only coded as whether or not they were exposed to a non-English language. Through targeted recruitment, future studies could address whether the number of non-English languages children are exposed to are correlated with Theory of Mind or if the presence of any non-English language is related to improved Theory of Mind performance. Additionally, the degree of exposure could be measured. Likewise, which non-English language children are exposed to can be coded in order to determine if exposure to different non-English languages have different respective relationships with Theory of Mind.
+
+Additionally, the positive correlation between Violent Crime Rate and Theory of Mind performance could be addressed with more depth in future research. For example, additional studies could be conducted that measure children’s awareness of crime occurring in their neighborhood as well as how often it comes up in conversation. Researchers could also investigate how these conversations are addressed by caregivers.
+
+# References
+
+::: {#refs custom-style="Bibliography"}
+:::
