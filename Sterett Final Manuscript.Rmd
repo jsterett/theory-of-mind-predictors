@@ -48,12 +48,12 @@ library(kableExtra)
 library(tidyverse)
 library("papaja")
 r_refs("Mini Feb 23.bib")
-library(magick)
-require(magick)
+library(magick) ## ND: this needs to come AFTER requiring the package
+require(magick) ## ND: The base require() function won't install the package, just let you know whether it's not already installed. You need to include this as part of a conditional with install.packages() or use the Require() function from the Require package (capital Rs!)
 ```
 
 ```{r read-in data}
-setwd('/Users/jordansterett/Desktop/D2M')
+#setwd('/Users/jordansterett/Desktop/D2M') ## General rule -- Don't setwd!! If you only use relative paths this shouldn't ever be necessary, and it will only ever break stuff. I have to comment it out for it to run for me because you aren't a user on my mac.
 # Reading in thesis data
 thesisdata <- read_csv("SterettD2M data.csv")
 ```
@@ -104,6 +104,9 @@ ggplot(thesisdata, aes(thesisdata$Age)) + geom_histogram(fill="lightblue", color
 ```
 
 ```{r race-ethnicity-bar, include=TRUE, echo=FALSE, results='hide', fig.align = 'center', out.width = "80%", fig.cap = "Participant Race/Ethnicity Bar Graph"}
+
+## ND: This I think could be better displayed in a table. You've really got two things happening here (race+ethnicity), so it's a little bit sprawling in this format. If you do go with a plot, rearrange your levels so that the longest ones aren't all the way on the left or else they get cut off.
+
 # assigning object to race/ethncity data
 Race_Ethnicity <- thesisdata$Race_Ethnicity
 # bar graph for racial/ethnicity demographics
@@ -113,16 +116,23 @@ ggplot(thesisdata, aes(Race_Ethnicity)) + geom_bar(fill = "lightblue", color = "
 ```
 
 ```{r parent1edu-bar, include=TRUE, echo=FALSE, results='hide', fig.align = 'center', out.width = "80%", fig.cap = "Histogram of Parent 1 Education Level"}
+
+## ND: Education should be an ordered factor variable. R will display the levels unordered factors in alphabetical order, so you'll need to manually order from lowest to highest education.
 # parent 1 education bar graph
 ggplot(thesisdata, aes(thesisdata$Parent1_Education)) + geom_bar(fill="lightblue", color="black") + labs(title = "Parent 1 Education", y = "Frequency", x = "Parent 1 Education") + theme_apa()
 ```
 
 ```{r map, fig.align = 'center', out.width = "80%", fig.cap = "Map of Participant States of Residence"}
+## ND: this file isn't in your repo anywhere that I can see, so i have to comment it out for the code to run/knit
+
 # including external image of map of participant states of residence
-knitr::include_graphics("state map.png")
+#knitr::include_graphics("state map.png") 
+
 ```
 
 ```{r birth-order-bar, include=TRUE, echo=FALSE, results='hide', fig.align = 'center', out.width = "80%", fig.cap = "Histogram of Participant Birth Order"}
+
+## ND: ditto above about ordered factors
 ggplot(thesisdata, aes(thesisdata$Birth_Order)) + 
   geom_bar(fill="lightblue", color = "black") +
   labs(x="Birth Order", y="Frequency") + theme_apa()
@@ -133,11 +143,13 @@ Participant ages ranged from 54.0 months to 70.9 months with a mean age of `r me
 ## Procedure
 
 ```{r slides, fig.align = 'center', out.width = "80%", fig.cap = "Slides shown to participants over Zoom for each task within the behavioral measure"}
+## ND: ditto above -- can't find this file in your repo
+
 # including external image of slides for behavioral measure
-knitr::include_graphics("TOM slides.png")
+#knitr::include_graphics("TOM slides.png")
 ```
 
-The behavioral tasks were conducted over Zoom using Wellman and Liu (2004). In this study, participants are asked to perform a Diverse Desires task, Diverse Beliefs task, Knowledge Access task, Contents False Belief task, and a Real-Apparent Emotions task over Zoom with a researcher using a slideshow presentation. For an overview of this presentation, see Figure\ \@ref(fig:slides). These questions ask children to infer what others want, know, and feel and how they will act in accordance. For example, the Knowledge Access task asks children to infer if the character knows what is inside the box when only the child, but not the character, has seen the puppy toy inside. A child received a score of 1 if they infer that the character did not know what was inside the box and a score of 0 if they inferred he did know. 
+The behavioral tasks were conducted over Zoom using Wellman and Liu (2004)<!--@ref?-->. In this study, participants are asked to perform a Diverse Desires task, Diverse Beliefs task, Knowledge Access task, Contents False Belief task, and a Real-Apparent Emotions task over Zoom with a researcher using a slideshow presentation. For an overview of this presentation, see Figure\ \@ref(fig:slides). These questions ask children to infer what others want, know, and feel and how they will act in accordance. For example, the Knowledge Access task asks children to infer if the character knows what is inside the box when only the child, but not the character, has seen the puppy toy inside. A child received a score of 1 if they infer that the character did not know what was inside the box and a score of 0 if they inferred he did know. 
 
 The parent-report measures were administered through Qualtrics. In the consent form, parents were asked to provide information regarding their child’s sex, race and ethnicity, birth order, native language, additional languages, and school enrollment. Parents also provided their own race and ethnicity, spoken languages, education level, and occupation. In order to measure parental perceptions of their children’s Theory of Mind skills, they filled out The Children’s Social Understanding Scale which asks about their children’s understanding of beliefs, knowledge, perception, desires, intentions, and emotions [@tahiroglu].
 
@@ -157,15 +169,16 @@ We used `r cite_r("r-references.bib")` and JASP Team (2023). JASP (Version 0.17.
 hist(`TOM_Sum`, col = "lightblue", main = "Behavioral Theory of Mind", xlab = "Scaling Theory of Mind tasks Sum")
 ```
 
-Children’s performance on @wellmanliu followed a bell curve with a mean score of 5.30 (SD = 1.58, range = 1.00-8.00) as shown in Figure\ \@ref(fig:TOM-hist). 
+Children’s performance on @wellmanliu followed a bell curve with a mean score of 5.30 (SD = 1.58, range = 1.00-8.00) as shown in Figure\ \@ref(fig:TOM-hist). <!-- ND: use in-text r code for these! -->
 
 ## Parent-Report Theory of Mind
 
 ```{r CSUS-hist, include=TRUE, echo=FALSE, results='hide', fig.align = 'center', out.width = "80%", fig.cap = "The Children's Soocial Understanding Scale Average Score Histogram"}
+
 hist(`CSUS_Average`, col = "lightblue", main = "Parent-Report Theory of Mind", xlab = "The Children's Social Understanding Scale Average Score")
 ```
 
-Parents reported a mean score of 3.28 (SD = 0.35, range = 1.00-4.00) for their children, a score appropriate for their age, as reported in @tahiroglu. The data followed a normal distribution as shown in Figure\ \@ref(fig:CSUS-hist). One participant did not complete this survey for a total of 64 participants, as reported above.
+Parents reported a mean score of 3.28 (SD = 0.35, range = 1.00-4.00) <!-- ND: intext r code -->for their children, a score appropriate for their age, as reported in @tahiroglu. The data followed a normal distribution as shown in Figure\ \@ref(fig:CSUS-hist). One participant did not complete this survey for a total of 64 participants, as reported above.
 
 ## Overall Theory of Mind
 
@@ -178,6 +191,9 @@ abline(lm(`CSUS_Average` ~ `TOM_Sum`, data = thesisdata)) + theme_apa()
 ```
 
 ```{r tomscoretab}
+
+## ND: I'm not sure this is the best way to show these data. It's not immediately clear what I'm supposed to get from this table. Sorting/grouping might help a lot, but my instinct is to say this is adequately represented in your plots without a table.
+## Also, your table is getting cut off on the last page. You can use the argument longtable=TRUE in your kable to help with that, or use kableExtra for a lot more customization options
 colnames(thesisdata)[26] = "Parent Report"
 colnames(thesisdata)[35] = "Behavioral Measure"
 tomtable <-thesisdata %>% select(26, 35)
@@ -185,7 +201,7 @@ knitr::kable(tomtable, caption = "Theory of Mind Scores by Participant")%>%
   kable_classic_2(full_width = F)
 ```
 
-In order to assess the accuracy of parent perceptions of their children’s Theory of Mind abilities, children’s average score on The Children’s Social Understanding Scale was run in a Pearson’s r with their Scaling Theory-of-Mind tasks sum. Figure\ \@ref(fig:CSUS-TOM-cor) shows the results of this analysis. These were correlated with a highly statistically significant p-value of .011 and a correlation coefficient of .32. Due to the highly significant correlation between measures and having several participants not complete each behavioral task, all following analyses will utilize the Children’s Social Understanding Scale average as the measure of children’s Theory of Mind ability. See Table\ \@ref(tab:tomscoretab) for participant scores on each measure.
+In order to assess the accuracy of parent perceptions of their children’s Theory of Mind abilities, children’s average score on The Children’s Social Understanding Scale was run in a Pearson’s r with their Scaling Theory-of-Mind tasks sum. Figure\ \@ref(fig:CSUS-TOM-cor) shows the results of this analysis. These were correlated with a highly statistically significant p-value of .011 and a correlation coefficient of .32. <!-- ND in text r-->Due to the highly significant correlation between measures and having several participants not complete each behavioral task, all following analyses will utilize the Children’s Social Understanding Scale average as the measure of children’s Theory of Mind ability. See Table\ \@ref(tab:tomscoretab) for participant scores on each measure.
 
 ## Child Demographics and Theory of Mind
 
@@ -241,3 +257,18 @@ Additionally, the positive correlation between Violent Crime Rate and Theory of 
 
 ::: {#refs custom-style="Bibliography"}
 :::
+
+
+<!--
+
+Great work, Jordi! It's so cool to see the ways you're building on this work from Nicole, Natalie, and Amanda. All in all this is a fantastic paper. I've left a few notes in the code above with some suggestions and issues, but to summarize:
+
+1. Watch your file paths! There were a lot of paths I needed to change to relative to get this to work, and the files for your images seemed to be missing from your repo.
+2. While your plots are great, one requirement of the assignment is that they (or at least 1) be built with ggplot. Ultimately going forward of course it's your choice to use whatever plotting you like! Just know that ggplot is sort of the gold standard and default in the R world right now. You definitely want to know how to use if even if you choose not to in your own work.
+3. I know we covered inline r code on the very last day of class and you had very little time to incorporate it into your manuscript (you DID include it though to meet the assignment requirement!), but I want to encourage you to really make use of it as you keep working on this! Nearly every data-dependent value in your text can be produced with relatively simple inline r code reference. It's a lot at first, but you'll get the hang of it really quick and it will be SUPER useful! I promise.
+
+It's been so great having you in class this quarter! I wish you all the best with this project and your future at Santa Cruz and beyond!!
+
+18/20
+
+-->
