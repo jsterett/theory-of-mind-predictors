@@ -1,4 +1,4 @@
-# **Theory of Mind Influences**
+# **Theory of Mind Predictors**
 *Study Summary* 
 - This project is motivated by prior research exploring how Theory of Mind performance in early childhood is correlated to executive functioning and later achievement. It is also motivated by the previous literature focusing on the child themselves by expanding the scope to investigate external inputs in the child's Zip Code and Social Network. This project is in pursuit of Honors distinction in my B.A. in Psychology.
 - This study includes behavioral measures, surveys, and government data.
